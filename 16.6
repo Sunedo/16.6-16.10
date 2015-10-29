@@ -1,0 +1,85 @@
+/*
+U10216010 ZHIWENZHAN
+Rotate with a mouse click the two messages
+"Java is fun" and "Java is powerful" 
+displayed on a panel
+
+*/
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class Alternate_two_messages extends JFrame{
+	public  Alternate_two_messages() {
+		// Create a MovableMessagePanel instance for moving a message
+		Java_is_fun_Panel p = new  Java_is_fun_Panel("Java is fun","Java is powerful");
+		
+	    //Place the message panel in the frame
+	    add(p);
+	    
+	}
+	
+	public static void main(String[] args) {
+		Alternate_two_messages frame = new Alternate_two_messages();
+	    frame.setTitle("Alternate_two_messages");
+	    frame.setSize(400, 300);
+	    frame.setLocationRelativeTo(null); // Center the frame
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setVisible(true);
+	}
+
+	  	// Inner class: MovableMessagePanel draws two message
+	  	static class Java_is_fun_Panel extends JPanel {
+	  		private String message_fun = "";
+	  		private String message_powerful = "";
+	  		private int x_fun = 30;
+	  		private int y_fun = 120;
+	  		private int x_powerful = 250;
+	  		private int y_powerful = 120;
+	  		private int high_y_fun = 0;
+	  		private int wide_x_fun = 0;
+	  		private int high_y_powerful = 0;
+	  		private int wide_x_powerful = 0;
+	  		private double theta_fun = 0;
+	  		private double theta_powerful = 0;
+
+	  		/** Construct a panel to draw string s */
+	  		public Java_is_fun_Panel(String fun,String powerful) {
+	  			message_fun = fun;
+	  			message_powerful = powerful;
+	  			addMouseMotionListener(new MouseMotionAdapter() {
+	  				@Override /** Handle mouse-dragged event */
+	  				public void mouseDragged(MouseEvent e) {
+	  					// Get the new location and repaint the screen
+	  					
+	  					//get wide and high to use atan calculate the theta 
+	  					wide_x_fun = e.getX() - x_fun;
+	  			        high_y_fun = e.getY() - y_fun;
+	  			        theta_fun = Math.atan(high_y_fun/wide_x_fun);
+	  			        wide_x_powerful = e.getX() - x_powerful;
+	  			        high_y_powerful = e.getY() - y_powerful;
+	  			        theta_powerful = Math.atan(high_y_powerful/wide_x_powerful);
+	  					repaint();
+	  					
+	  				}
+	  			});
+	    }
+
+	  		@Override
+	  		protected void paintComponent(Graphics g) {
+	  			super.paintComponent(g);
+	  			//enable rotate
+	  			Graphics2D g2d = (Graphics2D)g;
+	  			//rotate theta of fun 
+	  			g2d.rotate( theta_fun ,x_fun+30, y_fun);
+	  			//draw the string
+	  			g2d.drawString(message_fun, x_fun, y_fun);
+	  			//rotate to the original 
+	  			g2d.rotate( -theta_fun ,x_fun+30, y_fun);
+	  			//rotate theta of powerful
+	  			g2d.rotate( theta_powerful ,x_powerful+40, y_powerful );
+	  			//draw the string
+	  			g2d.drawString(message_powerful, x_powerful, y_powerful);
+	  		}
+	 }
+}
