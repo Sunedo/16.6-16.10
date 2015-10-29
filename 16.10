@@ -1,0 +1,63 @@
+/*
+U10216010 ZHIWENZHAN
+Receive a string from the keyboard and displays it on a panel.
+The enter key signals the end of a string.
+Whenever a new strings is entered, it is displayed on the panel
+
+*/
+
+import java.awt.*;
+import java.awt.event.*;
+
+import javax.swing.*;
+
+
+public class Enter_and_display_a_string extends JFrame{
+	private KeyboardPanel keyboardPanel = new KeyboardPanel();
+
+	  /** Initialize UI */
+	  public Enter_and_display_a_string() {
+	    // Add the keyboard panel to accept and display user input
+	    add(keyboardPanel);
+
+	    // Set focus
+	    keyboardPanel.setFocusable(true);
+	  }
+
+	  /** Main method */
+	  public static void main(String[] args) {
+		  Enter_and_display_a_string frame = new Enter_and_display_a_string();
+	    frame.setTitle("Enter_and_display_a_stringo");
+	    frame.setSize(300, 300);
+	    frame.setLocationRelativeTo(null); // Center the frame   
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setVisible(true);
+	  }
+
+	  // Inner class: KeyboardPanel for receiving key input
+	  static class KeyboardPanel extends JPanel {
+	    private int x = 20;
+	    private int y = 100;
+	    private String key_string = ""; // Default String
+
+	    public KeyboardPanel() {
+	      addKeyListener(new KeyAdapter() {
+	        @Override
+	        public void keyPressed(KeyEvent e) {
+	          switch (e.getKeyCode()) {
+	          	case KeyEvent.VK_ENTER: repaint(); break; //End the string and print
+	            default: key_string = (key_string + e.getKeyChar() ); //add the char to the String 
+	          }
+	        }
+	      });
+	    }
+
+	    @Override
+	    protected void paintComponent(Graphics g) {
+	      super.paintComponent(g);
+
+	      g.setFont(new Font("TimesRoman", Font.PLAIN, 24));
+	      g.drawString(key_string, x, y);
+	    }
+	  }
+}
