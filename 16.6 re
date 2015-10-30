@@ -1,0 +1,66 @@
+/*
+U10216010 ZHIWENZHAN
+Rotate with a mouse click the two messages
+"Java is fun" and "Java is powerful" 
+displayed on a panel
+
+Rebuild
+*/
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class Alternate_two_messages_re extends JFrame{
+	public  Alternate_two_messages_re() {
+		// Create a MovableMessagePanel instance for moving a message
+		Java_is_fun_Panel p = new  Java_is_fun_Panel();
+		
+	    //Place the message panel in the frame
+	    add(p);
+	    
+	}
+	
+	public static void main(String[] args) {
+		Alternate_two_messages_re frame = new Alternate_two_messages_re();
+	    frame.setTitle("Alternate_two_messages");
+	    frame.setSize(250, 200);
+	    frame.setLocationRelativeTo(null); // Center the frame
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setVisible(true);
+	}
+
+	  	// Inner class: MovableMessagePanel draws two message
+	  	static class Java_is_fun_Panel extends JPanel {
+	  		private String message_fun = "Java is fun";
+	  		private String message_powerful = "Java is powerful";
+	  		private String message = "Java is fun";
+	  		private int x = 100;
+	  		private int y = 100;
+
+	  		/** Construct a panel to draw string s */
+	  		public Java_is_fun_Panel() {
+	  			
+	  			addMouseMotionListener(new MouseMotionAdapter() {
+	  				@Override /** Handle mouse-dragged event */
+	  				public void mouseDragged(MouseEvent e) {
+	  					// Transform String while drag
+	  					if (message == message_fun){
+	  						message = message_powerful;
+	  					}
+	  					else if (message == message_powerful){
+	  						message = message_fun;
+	  					}
+	  					
+	  					repaint();
+	  					
+	  				}
+	  			});
+	    }
+
+	  		@Override
+	  		protected void paintComponent(Graphics g) {
+	  			super.paintComponent(g);
+	  			g.drawString(message, x, y);	  		
+	  		}
+	 }
+}
